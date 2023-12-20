@@ -9,16 +9,19 @@
     - [GNU/Linux](#gnulinux)
       - [Démarrage](#démarrage)
       - [Minicom](#minicom)
-      - [La LED intégrée à la carte](#la-led-intégrée-à-la-carte)
+      - [LED intégrée à la carte](#led-intégrée-à-la-carte)
       - [mpremote](#mpremote)
       - [Informations sur la carte](#informations-sur-la-carte)
-      - [Le capteur de température intégré à la carte](#le-capteur-de-température-intégré-à-la-carte)
-      - [Le Wifi](#le-wifi)
+      - [Capteur de température intégré à la carte](#capteur-de-température-intégré-à-la-carte)
+      - [Wifi](#wifi)
       - [Requête cliente HTTP et JSON](#requête-cliente-http-et-json)
       - [Serveur HTTP](#serveur-http)
       - [Bluetooth](#bluetooth)
+      - [Programme exécuté au démarrage](#programme-exécuté-au-démarrage)
     - [Windows](#windows)
-  - [Visual Studio Code](#visual-studio-code)
+  - [IDE](#ide)
+    - [Visual Studio Code](#visual-studio-code)
+    - [Thonny](#thonny)
   - [Auteurs](#auteurs)
 
 ---
@@ -391,7 +394,7 @@ Ceci donne accès au mode interpréteur interactif MicroPython (_shell_), alias 
 
 Documentation : https://docs.micropython.org/en/latest/reference/repl.html
 
-#### La LED intégrée à la carte
+#### LED intégrée à la carte
 
 Pilotage de la LED intégrée à la carte (`GPIO0`) :
 
@@ -593,7 +596,7 @@ WLAN : ok
 
 > Le module `rp2` (pour la famille de microcontrôleurs RP2xxx de la Raspberry Pi Foundation) prend en charge notamment la Raspberry Pi Pico qui utilise le RP2040. Documentation : https://docs.micropython.org/en/latest/rp2/general.html
 
-#### Le capteur de température intégré à la carte
+#### Capteur de température intégré à la carte
 
 Le microcontrôleur RP2040 de la Raspberry Pi Pico dispose d'un capteur de température interne sur le canal n°4 du convertisseur analogique-numérique (CAN).
 
@@ -639,7 +642,7 @@ Conversion : 24.70368 C
 Temperature : 25 C
 ```
 
-#### Le Wifi
+#### Wifi
 
 Documentations :
 
@@ -1192,13 +1195,21 @@ Deconnexion
 
 TODO
 
+#### Programme exécuté au démarrage
+
+Le programme lancé après le démarrage (_boot_) de la Raspberry Pi Pico se nomme `main.py`.
+
+> Evidemment, celui-ci doit être stocké sur le système de fichier embarqué `littlefs2` de la carte. On peut le télécharger avec [mpremote](#mpremote) ou via l'IDE [Thonny](#thonny).
+
 ### Windows
 
 TODO
 
 > Installateur C/C++ SDK pour Windows 10/11 : [pico-setup-windows-x64-standalone.exe](https://github.com/raspberrypi/pico-setup-windows/releases/latest/download/pico-setup-windows-x64-standalone.exe)
 
-## Visual Studio Code
+## IDE
+
+### Visual Studio Code
 
 [MicroPico](https://github.com/paulober/MicroPico) est une extension Visual Studio Code conçue pour le développement de projets MicroPython pour les cartes Raspberry Pi Pico et Pico W.
 
@@ -1224,11 +1235,22 @@ Une fois connectée à la Raspberry Pi Pico W, on peut exécuter un script Pytho
 
 ![](images/vscode-picow-run.png)
 
-> Voir aussi : l'IDE [Thonny](https://thonny.org/)
->```bash
->$ pip3 install thonny
->```
-> Puis aller dans _Tools_ > _Options_ > _Interpreter_ et sélectionner "MicroPython (Raspberry Pi Pico)"
+### Thonny
+
+[Thonny](https://thonny.org/) est un IDE Python pour débutants.
+
+```bash
+$ sudo apt-get install python3-tk
+$ pip3 install thonny
+```
+
+Puis aller dans Outils (_Tools_) > _Options_ > Interpréteur (_Interpreter_) et sélectionner "MicroPython (Raspberry Pi Pico)"
+
+![](images/thonny-options.png)
+
+Une fois connecté à la carte (ici sur le port `/dev/ttyACM0`), [Thonny](https://thonny.org/) donne un accès au RELP (_Shell_ Python) :
+
+![](images/thonny-relp.png)
 
 ## Auteurs
 
