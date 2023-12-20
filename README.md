@@ -411,11 +411,22 @@ Pin(EXT_GPIO0, mode=OUT)
 
 > `Ctrl-a q` pour quitter
 
-Voir aussi : Le module [utime](https://docs.micropython.org/en/v1.8.7/esp8266/library/utime.html)
+Voir aussi :
+
+-Le module [utime](https://docs.micropython.org/en/v1.8.7/esp8266/library/utime.html)
 
 ```python
 >>> import utime
 >>> utime.sleep(1)
+```
+
+- Importer des modules (_packages_) :
+
+```python
+>>> import upip
+>>> upip.install("micropython-pystone_lowmem")
+>>> import pystone_lowmem
+>>> pystone_lowmem.main()
 ```
 
 #### mpremote
@@ -544,13 +555,13 @@ $ mpremote run led.py
 $ mpremote run led.py
 ```
 
-> Importer des modules (_packages_) :
->```python
->>>> import upip
->>>> upip.install("micropython-pystone_lowmem")
->>>> import pystone_lowmem
->>>> pystone_lowmem.main()
->```
+- Lister les fichiers sur la carte :
+
+```bash
+$ mpremote fs ls
+ls :
+         141 main.py
+```
 
 #### Informations sur la carte
 
