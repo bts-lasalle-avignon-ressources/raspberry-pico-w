@@ -1204,7 +1204,24 @@ Deconnexion
 
 #### Bluetooth
 
-TODO
+Le module [bluetooth](https://docs.micropython.org/en/latest/library/bluetooth.html)
+
+> Les exemples en C/C++ : [Pico W Bluetooth](https://github.com/raspberrypi/pico-examples#pico-w-bluetooth)
+
+Exemple de transmission UART sur BLE avec le script [python/peripherique-bluetooth-ble.py](./python/peripherique-bluetooth-ble.py) :
+
+```txt
+Nom peripherique : picow
+Demarre l'annonce (advertising)
+Temperature : 31.73 C
+Donnees envoyees :  b'640c'
+Connecte :  b'738211c76413'
+Temperature : 31.73 C
+Donnees envoyees :  b'640c'
+Donnees recues :  b'$hello\r\n'
+Temperature : 31.73 C
+Donnees envoyees :  b'640c'
+```
 
 #### Programme exécuté au démarrage
 
