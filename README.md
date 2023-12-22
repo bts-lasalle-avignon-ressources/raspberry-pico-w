@@ -1264,7 +1264,153 @@ Liens :
 
 ### GNU/Linux
 
-TODO
+L'installation sera réalisé dans le répertoire `/home/$USER/pico`
+
+```bash
+$ cd ~/
+$ mkdir pico
+$ cd pico
+$ pwd
+/home/$USER/pico
+```
+
+Récupération du [kit de développement logiciel](https://fr.wikipedia.org/wiki/Kit_de_d%C3%A9veloppement) (SDK) et des exemples :
+
+```bash
+$ git clone https://github.com/raspberrypi/pico-sdk.git --branch master
+$ cd pico-sdk
+$ git submodule update --init
+$ cd ..
+$ git clone https://github.com/raspberrypi/pico-examples.git --branch master
+```
+
+> Mettre à jour le [SDK](https://fr.wikipedia.org/wiki/Kit_de_d%C3%A9veloppement) :
+>```bash
+> $ cd pico-sdk
+> $ git pull
+> $ git submodule update
+>```
+
+Pour créer les applications pour la carte Raspbery Pi Pico, il faut ensuite installer localement une [chaîne de compilation croisée](https://fr.wikipedia.org/wiki/Cha%C3%AEne_de_compilation) (_toolchain_ and _cross compiler_) pour proceseur [ARM](https://fr.wikipedia.org/wiki/Architecture_ARM) :
+
+```bash
+$ sudo apt update
+$ sudo apt install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential
+
+$ arm-none-eabi-g++ --version
+arm-none-eabi-g++ (15:9-2019-q4-0ubuntu1) 9.2.1 20191025 (release) [ARM/arm-9-branch revision 277599]
+Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+$ cmake --version
+cmake version 3.16.3
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+```
+
+Il faut fixer la variable d'environnement `PICO_SDK_PATH` :
+
+```bash
+$ export PICO_SDK_PATH=~/pico/pico-sdk
+```
+
+> cf. le fichier `~/.bashrc`
+
+Liste des exemples
+
+```bash
+$ ls -l ~/pico/pico-examples/
+
+$ ls -l ~/pico/pico-examples/blink/
+total 8,0K
+-rw-rw-r-- 1 tvaira tvaira 484 déc.  22 10:34 blink.c
+-rw-rw-r-- 1 tvaira tvaira 245 déc.  22 10:34 CMakeLists.txt
+```
+
+Test du clignotement de la Led intégrée :
+
+```bash
+$ cd ~/pico/pico-examples/pico_w/wifi/blink/
+
+$ bat picow_blink.c
+───────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+       │ File: ../picow_blink.c
+───────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1   │ /**
+   2   │  * Copyright (c) 2022 Raspberry Pi (Trading) Ltd.
+   3   │  *
+   4   │  * SPDX-License-Identifier: BSD-3-Clause
+   5   │  */
+   6   │ 
+   7   │ #include "pico/stdlib.h"
+   8   │ #include "pico/cyw43_arch.h"
+   9   │ 
+  10   │ int main() {
+  11   │     stdio_init_all();
+  12   │     if (cyw43_arch_init()) {
+  13   │         printf("Wi-Fi init failed");
+  14   │         return -1;
+  15   │     }
+  16   │     while (true) {
+  17   │         cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+  18   │         sleep_ms(250);
+  19   │         cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+  20   │         sleep_ms(250);
+  21   │     }
+  22   │ }
+───────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+$ mkdir build && cd build
+```
+
+Dans le fichier `CMakeLists.txt` :
+
+```cmake
+CMAKE_MINIMUM_REQUIRED(VERSION 3.16)
+
+# initialize the SDK based on PICO_SDK_PATH
+# note: this must happen before project()
+include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
+
+project(picow_blink C CXX ASM)
+
+# initialize the Raspberry Pi Pico SDK
+pico_sdk_init()
+
+add_executable(picow_blink
+        picow_blink.c
+        )
+
+# pull in common dependencies
+target_link_libraries(picow_blink
+        pico_stdlib              # for core functionality
+        pico_cyw43_arch_none     # we need Wifi to access the GPIO, but we don't need anything else
+        )
+
+# create map/bin/hex/uf2 file etc.
+pico_add_extra_outputs(picow_blink)
+
+# enable usb output, disable uart output
+pico_enable_stdio_usb(${PROJECT_NAME} 1)
+pico_enable_stdio_uart(${PROJECT_NAME} 0)
+```
+
+```bash
+$ cmake -DPICO_BOARD=pico_w ..
+
+$ ls -l picow_blink.uf2
+-rw-rw-r-- 1 tvaira tvaira 551424 déc.  22 11:40 picow_blink.uf2
+```
+
+Maintenir l'appui sur le bouton `BOOTSEL` puis brancher la [Raspberry Pi Pico W](https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html)
+
+Copier le fihcier `blink.uf2` sur la carte :
+
+```bash
+$ cp ./picow_blink.uf2 /media/$USER/RPI-RP2/
+$ sudo sync
+```
 
 ### Windows
 
