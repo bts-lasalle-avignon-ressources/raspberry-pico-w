@@ -1264,7 +1264,7 @@ Liens :
 
 ### GNU/Linux
 
-L'installation sera réalisé dans le répertoire `/home/$USER/pico`
+L'installation sera réalisée dans le répertoire `/home/$USER/pico` :
 
 ```bash
 $ cd ~/
@@ -1291,7 +1291,7 @@ $ git clone https://github.com/raspberrypi/pico-examples.git --branch master
 > $ git submodule update
 >```
 
-Pour créer les applications pour la carte Raspbery Pi Pico, il faut ensuite installer localement une [chaîne de compilation croisée](https://fr.wikipedia.org/wiki/Cha%C3%AEne_de_compilation) (_toolchain_ and _cross compiler_) pour proceseur [ARM](https://fr.wikipedia.org/wiki/Architecture_ARM) :
+Pour créer des applications pour la carte Raspbery Pi Pico, il faut ensuite installer localement une [chaîne de compilation croisée](https://fr.wikipedia.org/wiki/Cha%C3%AEne_de_compilation) (_toolchain_ and _cross compiler_) pour processeur [ARM](https://fr.wikipedia.org/wiki/Architecture_ARM) :
 
 ```bash
 $ sudo apt update
@@ -1317,7 +1317,7 @@ $ export PICO_SDK_PATH=~/pico/pico-sdk
 
 > cf. le fichier `~/.bashrc`
 
-Liste des exemples
+Liste des exemples :
 
 ```bash
 $ ls -l ~/pico/pico-examples/
@@ -1328,14 +1328,14 @@ total 8,0K
 -rw-rw-r-- 1 tvaira tvaira 245 déc.  22 10:34 CMakeLists.txt
 ```
 
-Test du clignotement de la Led intégrée :
+Test du clignotement de la Led intégrée (Pico W) :
 
 ```bash
 $ cd ~/pico/pico-examples/pico_w/wifi/blink/
 
 $ bat picow_blink.c
 ───────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-       │ File: ../picow_blink.c
+       │ File: ./picow_blink.c
 ───────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
    1   │ /**
    2   │  * Copyright (c) 2022 Raspberry Pi (Trading) Ltd.
@@ -1396,8 +1396,12 @@ pico_enable_stdio_usb(${PROJECT_NAME} 1)
 pico_enable_stdio_uart(${PROJECT_NAME} 0)
 ```
 
+Fabrication :
+
 ```bash
 $ cmake -DPICO_BOARD=pico_w ..
+
+$ make
 
 $ ls -l picow_blink.uf2
 -rw-rw-r-- 1 tvaira tvaira 551424 déc.  22 11:40 picow_blink.uf2
@@ -1405,7 +1409,7 @@ $ ls -l picow_blink.uf2
 
 Maintenir l'appui sur le bouton `BOOTSEL` puis brancher la [Raspberry Pi Pico W](https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html)
 
-Copier le fihcier `blink.uf2` sur la carte :
+Copier le fichier `picow_blink.uf2` sur la carte :
 
 ```bash
 $ cp ./picow_blink.uf2 /media/$USER/RPI-RP2/
