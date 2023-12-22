@@ -19,6 +19,9 @@
       - [Bluetooth](#bluetooth)
       - [Programme exécuté au démarrage](#programme-exécuté-au-démarrage)
     - [Windows](#windows)
+  - [Mise en oeuvre C/C++](#mise-en-oeuvre-cc)
+    - [GNU/Linux](#gnulinux-1)
+    - [Windows](#windows-1)
   - [IDE](#ide)
     - [Visual Studio Code](#visual-studio-code)
     - [Thonny](#thonny)
@@ -68,7 +71,7 @@ Documentation MicroPython : https://docs.micropython.org/en/latest/
 
 ## Mise en oeuvre MycroPython
 
-Les fonctionnalités actuellement prises en charge incluent :
+Les fonctionnalités actuellement prises en charge en MicroPython incluent :
 
 - [REPL](https://docs.micropython.org/en/latest/reference/repl.html) (_shell_ Python) via USB et UART (on GP0/GP1)
 - Système de fichier embarqué `littlefs2` de 1600kB (taille par défaut sur la Raspberry Pi Pico)
@@ -555,6 +558,12 @@ $ mpremote run led.py
 $ mpremote run led.py
 ```
 
+- Copier un fichier sur la carte :
+
+```bash
+$ mpremote fs cp ./python/led.py :main.py
+```
+
 - Lister les fichiers sur la carte :
 
 ```bash
@@ -562,6 +571,8 @@ $ mpremote fs ls
 ls :
          141 main.py
 ```
+
+> Un script nommé `main.py` sera exécuté automatiquement après le démarrage (_boot_) de la Raspberry Pi Pico.
 
 #### Informations sur la carte
 
@@ -1223,6 +1234,17 @@ Temperature : 31.73 C
 Donnees envoyees :  b'640c'
 ```
 
+> Le programme ci-dessus nécessite des fonctions définies dans le script [ble_advertising.py](./python/ble_advertising.py) qui doit être présent sur le système de fichier embarqué `littlefs2` de la Raspberry Pi Pico W :
+
+```bash
+$ mpremote a0 fs cp ./python/ble_advertising.py :ble_advertising.py
+
+$ mpremote a0 fs ls
+ls :
+        2368 ble_advertising.py
+         141 main.py
+```
+
 #### Programme exécuté au démarrage
 
 Le programme lancé après le démarrage (_boot_) de la Raspberry Pi Pico se nomme `main.py`.
@@ -1232,6 +1254,19 @@ Le programme lancé après le démarrage (_boot_) de la Raspberry Pi Pico se nom
 ### Windows
 
 TODO
+
+## Mise en oeuvre C/C++
+
+Liens :
+
+- [C/C++ SDK (PDF)](https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf) 
+- [C/C++ SDK (HTML)](https://www.raspberrypi.com/documentation/microcontrollers/c_sdk.html)
+
+### GNU/Linux
+
+TODO
+
+### Windows
 
 > Installateur C/C++ SDK pour Windows 10/11 : [pico-setup-windows-x64-standalone.exe](https://github.com/raspberrypi/pico-setup-windows/releases/latest/download/pico-setup-windows-x64-standalone.exe)
 
@@ -1279,6 +1314,14 @@ Puis aller dans Outils (_Tools_) > _Options_ > Interpréteur (_Interpreter_) et 
 Une fois connecté à la carte (ici sur le port `/dev/ttyACM0`), [Thonny](https://thonny.org/) donne un accès au RELP (_Shell_ Python) :
 
 ![](images/thonny-relp.png)
+
+L'IDE permet de choisir la localisation des fichiers à éditer :
+
+![](images/thonny-destination.png)
+
+Les fichiers du système de fichier embarqué `littlefs2` de la Raspberry Pi Pico W :
+
+![](images/thonny-fichiers.png)
 
 ## Auteurs
 
