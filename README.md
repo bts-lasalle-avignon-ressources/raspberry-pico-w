@@ -25,6 +25,7 @@
   - [IDE](#ide)
     - [Visual Studio Code](#visual-studio-code)
     - [Thonny](#thonny)
+  - [Simulateur en ligne](#simulateur-en-ligne)
   - [Auteurs](#auteurs)
 
 ---
@@ -1472,6 +1473,18 @@ L'IDE permet de choisir la localisation des fichiers à éditer :
 Les fichiers du système de fichier embarqué `littlefs2` de la Raspberry Pi Pico W :
 
 ![](images/thonny-fichiers.png)
+
+## Simulateur en ligne
+
+[Wokwi](https://wokwi.com/) est un simulateur "électronqiue" pour des systèmes embarqués (Arduino, ESP32, STM32 et de nombreuses autres cartes et équipements) dans un navigateur.
+
+Liens :
+
+- [Wokwi](https://wokwi.com/) : https://wokwi.com/
+- [Matériel pris en charge](https://docs.wokwi.com/getting-started/supported-hardware) : https://docs.wokwi.com/getting-started/supported-hardware
+- [Rasperry Pi Pico](https://wokwi.com/pi-pico) : https://wokwi.com/pi-pico
+
+![](images/wokwi.png)
 
 ## Auteurs
 
