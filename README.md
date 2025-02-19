@@ -20,6 +20,7 @@
       - [Programme exécuté au démarrage](#programme-exécuté-au-démarrage)
     - [Windows](#windows)
   - [Mise en oeuvre C/C++](#mise-en-oeuvre-cc)
+    - [PlatformIO](#platformio)
     - [GNU/Linux](#gnulinux-1)
     - [Windows](#windows-1)
   - [IDE](#ide)
@@ -1262,6 +1263,55 @@ Liens :
 
 - [C/C++ SDK (PDF)](https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf) 
 - [C/C++ SDK (HTML)](https://www.raspberrypi.com/documentation/microcontrollers/c_sdk.html)
+
+### PlatformIO
+
+La série Pico est prise en charge dans PlatformIO avec le _framework_ Arduino.
+
+> cf. https://github.com/maxgerhardt/platform-raspberrypi et https://docs.platformio.org/en/latest/platforms/raspberrypi.html
+
+Pour Raspberry Pi Pico W, il faut utiliser la carte (_board_) `rpipicow` :
+
+```ini
+[env]
+; Development version
+platform = https://github.com/maxgerhardt/platform-raspberrypi.git
+; Stable version
+;platform = raspberrypi
+framework = arduino
+
+[env:rpipicow]
+board = rpipicow
+monitor_port = /dev/ttyACM0
+monitor_speed = 115200
+;board_build.core = earlephilhower
+;board_build.filesystem_size = 0.5m
+```
+
+Le test de clignotement de la Led intégrée :
+
+```cpp
+#include <Arduino.h>
+
+uint8_t esp32Led = LED_BUILTIN; // GPIO0
+
+void setup()
+{
+    Serial.begin(115200);
+
+    pinMode(esp32Led, OUTPUT);
+}
+
+void loop()
+{
+    digitalWrite(esp32Led, HIGH);
+    delay(1000);
+    digitalWrite(esp32Led, LOW);
+    delay(1000);
+}
+```
+
+> Il faut maintenir l'appui sur le bouton `BOOTSEL` puis brancher la [Raspberry Pi Pico W](https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html) pour téléverser le _firmware_.
 
 ### GNU/Linux
 
